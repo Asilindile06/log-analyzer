@@ -19,3 +19,20 @@ def random_log_line(ip, path, status, timestamp):
 
     # Stitch everything into one line using an f-string
     return f'{ip} - - [{time_str}] "GET {path} HTTP/1.1" {status} {size}'
+
+def generate_logs(filename, num_lines=200):
+    """
+    Create a fake access log file containing:
+    - num_lines of random 'normal' traffic
+    - one deliberate brute-force attack pattern (10 failed logins from one IP)
+    """
+    start_time = datetime.now()
+    lines = []  # collect all lines here, write to file once at the end
+
+    # --- Generate normal, random traffic ---
+    for i in range(num_lines):
+        ip = random.choice(IPS)
+        path = random.choice(PATHS)
+        status = random.choice(STATUS_CODES)
+        timestamp = start_time + timedelta(seconds=i)  # each line 1 second apart
+        lines.append(random_log_line(ip, path, status, timestamp))
