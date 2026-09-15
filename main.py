@@ -36,3 +36,14 @@ def generate_logs(filename, num_lines=200):
         status = random.choice(STATUS_CODES)
         timestamp = start_time + timedelta(seconds=i)  # each line 1 second apart
         lines.append(random_log_line(ip, path, status, timestamp))
+
+    # --- Generate brute-force attack pattern ---
+    attack_ip = random.choice(IPS)
+    for i in range(10):
+        timestamp = start_time + timedelta(seconds=num_lines + i)
+        lines.append(random_log_line(attack_ip, "/login", 401, timestamp))
+
+    # Write all lines to the file
+    with open(filename, "w") as f:
+        for line in lines:
+            f.write(line + "\n")
