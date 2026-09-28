@@ -47,3 +47,5 @@ def generate_logs(filename, num_lines=200):
     with open(filename, "w") as f:
         for line in lines:
             f.write(line + "\n")
+
+generate_logs("sample.log")
