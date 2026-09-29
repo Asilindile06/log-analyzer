@@ -1,28 +1,26 @@
-import re
-
-
 def parse_log_line(log_line):
-    """
-    Parse one server log line and extract its important information.
-    """
+    parts = log_line.split()
 
-    # Regular expression used to identify the different parts
-    # of our Common Log Format log entry.
-    pattern = r'(\S+) \S+ \S+ \[(.*?)\] "(\S+) (\S+) (\S+)" (\d+) (\d+)'
+    ip_address = parts[0]
+    method = parts[4].replace('"', '')
+    path = parts[5]
+    status_code = parts[-1]
 
-    # Search the log line for a match against our pattern.
-    match = re.match(pattern, log_line)
-        # If the log line does not match our expected format,
-    # return None instead of causing an error.
-    if match is None:
-        return None
-
-    # Return the important information as a dictionary.
     return {
-        "ip": match.group(1),
-        "timestamp": match.group(2),
-        "method": match.group(3),
-        "path": match.group(4),
-        "status": int(match.group(6)),
-        "size": int(match.group(7))
+        "ip": ip_address,
+        "method": method,
+        "path": path,
+        "status": status_code
     }
+
+
+def is_failed_login(log):
+    return log["status"] == "401"
+
+
+log_line = '198.168.1.10 - - [29/Sep/2026:14:32:10] "GET /login HTTP/1.1" 401'
+
+result = parse_log_line(log_line)
+
+print(result)
+print(is_failed_login(result))
