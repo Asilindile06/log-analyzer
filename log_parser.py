@@ -12,6 +12,10 @@ def parse_log_line(log_line):
 
     # Search the log line for a match against our pattern.
     match = re.match(pattern, log_line)
+        # If the log line does not match our expected format,
+    # return None instead of causing an error.
+    if match is None:
+        return None
 
     # Return the important information as a dictionary.
     return {

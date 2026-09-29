@@ -22,6 +22,17 @@ class TestLogParser(unittest.TestCase):
         self.assertEqual(result["status"], 401)
         self.assertEqual(result["size"], 3734)
 
+    # Test that an invalid log line is handled safely.
+    def test_invalid_log_line(self):
+        # This log line does not follow our expected format.
+        log_line = "this is not a valid log line"
+
+        # Send the invalid log line to the parser.
+        result = parse_log_line(log_line)
+
+        # The parser should return None when there is no match.
+        self.assertIsNone(result)
+
 
 # Run the tests when this file is executed directly.
 if __name__ == "__main__":
