@@ -17,6 +17,20 @@ def parse_log_line(log_line):
 def is_failed_login(log):
     return log["status"] == "401"
 
+def count_failed_logins(logs):
+    failed_logins = {}
+
+    for log in logs:
+        if is_failed_login(log):
+            ip_address = log["ip"]
+
+            if ip_address in failed_logins:
+                failed_logins[ip_address] += 1
+            else:
+                failed_logins[ip_address] = 1
+
+    return failed_logins
+
 
 log_line = '198.168.1.10 - - [29/Sep/2026:14:32:10] "GET /login HTTP/1.1" 401'
 
