@@ -2,8 +2,12 @@ import random
 from datetime import datetime, timedelta
 import random
 from datetime import datetime, timedelta
-from log_parser import read_log_file, count_failed_logins, find_suspicious_ips
-
+from log_parser import (
+    read_log_file,
+    count_failed_logins,
+    find_suspicious_ips,
+    generate_security_report
+)
 
 # List of fake IP addresses that will be randomly used in the log entries.
 IPS = [
@@ -126,8 +130,6 @@ failed_logins = count_failed_logins(logs)
 # Find IP addresses with multiple failed login attempts.
 suspicious_ips = find_suspicious_ips(failed_logins)
 
-print("Failed login attempts:")
-print(failed_logins)
+generate_security_report(failed_logins, suspicious_ips)
 
-print("Suspicious IP addresses:")
-print(suspicious_ips)
+

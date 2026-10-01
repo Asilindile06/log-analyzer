@@ -42,6 +42,16 @@ def find_suspicious_ips(failed_logins, threshold=3):
 
     return suspicious_ips
 
+def generate_security_report(failed_logins, suspicious_ips):
+    print("\n=== Security Report ===")
+
+    for ip_address in suspicious_ips:
+        attempts = failed_logins[ip_address]
+
+        print(f"Suspicious IP: {ip_address}")
+        print(f"Failed login attempts: {attempts}")
+        print()
+
 
 def read_log_file(filename):
     logs = []
