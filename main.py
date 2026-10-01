@@ -1,5 +1,8 @@
 import random
 from datetime import datetime, timedelta
+import random
+from datetime import datetime, timedelta
+from log_parser import read_log_file, count_failed_logins, find_suspicious_ips
 
 
 # List of fake IP addresses that will be randomly used in the log entries.
@@ -113,3 +116,18 @@ def generate_logs(filename, num_lines=200):
 # Start the log generator and save the generated logs
 # in a file called sample.log.
 generate_logs("sample.log")
+
+# Read the generated log file.
+logs = read_log_file("sample.log")
+
+# Count failed login attempts for each IP address.
+failed_logins = count_failed_logins(logs)
+
+# Find IP addresses with multiple failed login attempts.
+suspicious_ips = find_suspicious_ips(failed_logins)
+
+print("Failed login attempts:")
+print(failed_logins)
+
+print("Suspicious IP addresses:")
+print(suspicious_ips)

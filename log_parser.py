@@ -55,8 +55,3 @@ def read_log_file(filename):
                 logs.append(log)
 
     return logs
-
-logs = read_log_file("sample.log")
-
-print("Number of logs:", len(logs))
-print("First log:", logs[0])
