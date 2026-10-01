@@ -1,10 +1,12 @@
 def parse_log_line(log_line):
     parts = log_line.split()
 
+
     ip_address = parts[0]
-    method = parts[4].replace('"', '')
-    path = parts[5]
-    status_code = parts[-1]
+    method = parts[5].replace('"', '')
+    path = parts[6]
+    status_code = parts[8]
+
 
     return {
         "ip": ip_address,
@@ -40,12 +42,21 @@ def find_suspicious_ips(failed_logins, threshold=3):
 
     return suspicious_ips
 
-failed_logins = {
-    "198.168.1.10": 3,
-    "192.168.1.20": 1,
-    "203.0.113.44": 5
-}
 
-suspicious_ips = find_suspicious_ips(failed_logins)
+def read_log_file(filename):
+    logs = []
 
-print(suspicious_ips)
+    with open(filename, "r") as file:
+        for line in file:
+            line = line.strip()
+
+            if line:
+                log = parse_log_line(line)
+                logs.append(log)
+
+    return logs
+
+logs = read_log_file("sample.log")
+
+print("Number of logs:", len(logs))
+print("First log:", logs[0])
