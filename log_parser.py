@@ -31,10 +31,21 @@ def count_failed_logins(logs):
 
     return failed_logins
 
+def find_suspicious_ips(failed_logins, threshold=3):
+    suspicious_ips = []
 
-log_line = '198.168.1.10 - - [29/Sep/2026:14:32:10] "GET /login HTTP/1.1" 401'
+    for ip_address in failed_logins:
+        if failed_logins[ip_address] >= threshold:
+            suspicious_ips.append(ip_address)
 
-result = parse_log_line(log_line)
+    return suspicious_ips
 
-print(result)
-print(is_failed_login(result))
+failed_logins = {
+    "198.168.1.10": 3,
+    "192.168.1.20": 1,
+    "203.0.113.44": 5
+}
+
+suspicious_ips = find_suspicious_ips(failed_logins)
+
+print(suspicious_ips)
