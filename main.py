@@ -6,7 +6,8 @@ from log_parser import (
     read_log_file,
     count_failed_logins,
     find_suspicious_ips,
-    generate_security_report
+    generate_security_report,
+    save_security_report
 )
 
 # List of fake IP addresses that will be randomly used in the log entries.
@@ -132,4 +133,8 @@ suspicious_ips = find_suspicious_ips(failed_logins)
 
 generate_security_report(failed_logins, suspicious_ips)
 
-
+save_security_report(
+    failed_logins,
+    suspicious_ips,
+    "security_report.txt"
+)

@@ -53,6 +53,17 @@ def generate_security_report(failed_logins, suspicious_ips):
         print()
 
 
+def save_security_report(failed_logins, suspicious_ips, filename):
+    with open(filename, "w") as file:
+        file.write("=== Security Report ===\n\n")
+
+        for ip_address in suspicious_ips:
+            attempts = failed_logins[ip_address]
+
+            file.write(f"Suspicious IP: {ip_address}\n")
+            file.write(f"Failed login attempts: {attempts}\n\n")
+
+
 def read_log_file(filename):
     logs = []
 

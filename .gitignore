@@ -1,1 +1,4 @@
 venv/
+sample.log
+security_report.txt
+__pycache__/
