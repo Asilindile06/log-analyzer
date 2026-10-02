@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from log_parser import (
     read_log_file,
     count_failed_logins,
+    total_failed_logins,
     find_suspicious_ips,
     generate_security_report,
     save_security_report
@@ -122,19 +123,29 @@ def generate_logs(filename, num_lines=200):
 # in a file called sample.log.
 generate_logs("sample.log")
 
-# Read the generated log file.
+
+# Read all the log entries from the sample log file.
 logs = read_log_file("sample.log")
 
-# Count failed login attempts for each IP address.
+# Count the failed login attempts for each IP address.
 failed_logins = count_failed_logins(logs)
 
-# Find IP addresses with multiple failed login attempts.
+# Calculate the total number of failed login attempts.
+total_failed = total_failed_logins(failed_logins)
+
+# Find IP addresses that have reached the suspicious threshold.
 suspicious_ips = find_suspicious_ips(failed_logins)
 
+# Display the total number of failed login attempts.
+print(f"Total failed login attempts: {total_failed}")
+
+# Display the security report.
 generate_security_report(failed_logins, suspicious_ips)
 
+# Save the security report to a text file.
 save_security_report(
     failed_logins,
     suspicious_ips,
     "security_report.txt"
 )
+

@@ -1,12 +1,10 @@
 def parse_log_line(log_line):
     parts = log_line.split()
 
-
     ip_address = parts[0]
     method = parts[5].replace('"', '')
     path = parts[6]
     status_code = parts[8]
-
 
     return {
         "ip": ip_address,
@@ -18,6 +16,7 @@ def parse_log_line(log_line):
 
 def is_failed_login(log):
     return log["status"] == "401"
+
 
 def count_failed_logins(logs):
     failed_logins = {}
@@ -33,6 +32,16 @@ def count_failed_logins(logs):
 
     return failed_logins
 
+
+def total_failed_logins(failed_logins):
+    total = 0
+
+    for ip_address in failed_logins:
+        total += failed_logins[ip_address]
+
+    return total
+
+
 def find_suspicious_ips(failed_logins, threshold=3):
     suspicious_ips = []
 
@@ -41,6 +50,21 @@ def find_suspicious_ips(failed_logins, threshold=3):
             suspicious_ips.append(ip_address)
 
     return suspicious_ips
+
+
+def read_log_file(filename):
+    logs = []
+
+    with open(filename, "r") as file:
+        for line in file:
+            line = line.strip()
+
+            if line:
+                log = parse_log_line(line)
+                logs.append(log)
+
+    return logs
+
 
 def generate_security_report(failed_logins, suspicious_ips):
     print("\n=== Security Report ===")
@@ -62,17 +86,3 @@ def save_security_report(failed_logins, suspicious_ips, filename):
 
             file.write(f"Suspicious IP: {ip_address}\n")
             file.write(f"Failed login attempts: {attempts}\n\n")
-
-
-def read_log_file(filename):
-    logs = []
-
-    with open(filename, "r") as file:
-        for line in file:
-            line = line.strip()
-
-            if line:
-                log = parse_log_line(line)
-                logs.append(log)
-
-    return logs
