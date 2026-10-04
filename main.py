@@ -5,12 +5,12 @@ from datetime import datetime, timedelta
 from log_parser import (
     read_log_file,
     count_failed_logins,
+    count_status_codes,
     total_failed_logins,
     find_suspicious_ips,
     generate_security_report,
     save_security_report
 )
-
 # List of fake IP addresses that will be randomly used in the log entries.
 IPS = [
     "192.168.1.10",
@@ -130,6 +130,9 @@ logs = read_log_file("sample.log")
 # Count the failed login attempts for each IP address.
 failed_logins = count_failed_logins(logs)
 
+# Count all HTTP status codes.
+status_codes = count_status_codes(logs)
+
 # Calculate the total number of failed login attempts.
 total_failed = total_failed_logins(failed_logins)
 
@@ -138,6 +141,9 @@ suspicious_ips = find_suspicious_ips(failed_logins)
 
 # Display the total number of failed login attempts.
 print(f"Total failed login attempts: {total_failed}")
+
+print("\nHTTP Status Code Statistics:")
+print(status_codes)
 
 # Display the security report.
 generate_security_report(failed_logins, suspicious_ips)

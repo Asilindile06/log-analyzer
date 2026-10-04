@@ -32,6 +32,20 @@ def count_failed_logins(logs):
 
     return failed_logins
 
+# Count how many times each HTTP status code appears in the logs.
+def count_status_codes(logs):
+    status_codes = {}
+
+    for log in logs:
+        status = log["status"]
+
+        if status in status_codes:
+            status_codes[status] += 1
+        else:
+            status_codes[status] = 1
+
+    return status_codes
+
 
 def total_failed_logins(failed_logins):
     total = 0
