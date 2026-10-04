@@ -7,10 +7,12 @@ from log_parser import (
     count_failed_logins,
     count_status_codes,
     total_failed_logins,
+    find_most_failed_ip,
     find_suspicious_ips,
     generate_security_report,
     save_security_report
 )
+
 # List of fake IP addresses that will be randomly used in the log entries.
 IPS = [
     "192.168.1.10",
@@ -136,6 +138,9 @@ status_codes = count_status_codes(logs)
 # Calculate the total number of failed login attempts.
 total_failed = total_failed_logins(failed_logins)
 
+# Find the IP address with the highest number of failed login attempts.
+most_failed_ip, highest_attempts = find_most_failed_ip(failed_logins)
+
 # Find IP addresses that have reached the suspicious threshold.
 suspicious_ips = find_suspicious_ips(failed_logins)
 
@@ -144,6 +149,9 @@ print(f"Total failed login attempts: {total_failed}")
 
 print("\nHTTP Status Code Statistics:")
 print(status_codes)
+
+print(f"\nIP with the most failed login attempts: {most_failed_ip}")
+print(f"Number of failed attempts: {highest_attempts}")
 
 # Display the security report.
 generate_security_report(failed_logins, suspicious_ips)

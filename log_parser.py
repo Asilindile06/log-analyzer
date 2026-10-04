@@ -55,6 +55,19 @@ def total_failed_logins(failed_logins):
 
     return total
 
+# Find the IP address with the most failed login attempts.
+def find_most_failed_ip(failed_logins):
+    most_failed_ip = None
+    highest_attempts = 0
+
+    for ip_address in failed_logins:
+        attempts = failed_logins[ip_address]
+
+        if attempts > highest_attempts:
+            highest_attempts = attempts
+            most_failed_ip = ip_address
+
+    return most_failed_ip, highest_attempts
 
 def find_suspicious_ips(failed_logins, threshold=3):
     suspicious_ips = []
