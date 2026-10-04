@@ -1,3 +1,6 @@
+import json
+
+
 def parse_log_line(log_line):
     parts = log_line.split()
 
