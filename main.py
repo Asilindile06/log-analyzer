@@ -10,9 +10,9 @@ from log_parser import (
     find_most_failed_ip,
     find_suspicious_ips,
     generate_security_report,
-    save_security_report
+    save_security_report,
+    save_json_report
 )
-
 # List of fake IP addresses that will be randomly used in the log entries.
 IPS = [
     "192.168.1.10",
@@ -161,5 +161,12 @@ save_security_report(
     failed_logins,
     suspicious_ips,
     "security_report.txt"
+)
+
+# Save the security analysis as a JSON report.
+save_json_report(
+    failed_logins,
+    suspicious_ips,
+    "security_report.json"
 )
 

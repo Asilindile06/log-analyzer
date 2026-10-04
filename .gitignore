@@ -1,4 +1,5 @@
 venv/
 sample.log
 security_report.txt
+security_report.json
 __pycache__/

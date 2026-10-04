@@ -116,3 +116,16 @@ def save_security_report(failed_logins, suspicious_ips, filename):
 
             file.write(f"Suspicious IP: {ip_address}\n")
             file.write(f"Failed login attempts: {attempts}\n\n")
+
+# Save the security analysis results as a JSON file.
+def save_json_report(failed_logins, suspicious_ips, filename):
+    report = {
+        "total_failed_logins": total_failed_logins(failed_logins),
+        "suspicious_ips": {}
+    }
+
+    for ip_address in suspicious_ips:
+        report["suspicious_ips"][ip_address] = failed_logins[ip_address]
+
+    with open(filename, "w") as file:
+        json.dump(report, file, indent=4)
