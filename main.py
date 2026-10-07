@@ -6,6 +6,7 @@ from log_parser import (
     read_log_file,
     count_failed_logins,
     count_status_codes,
+    count_paths,
     total_failed_logins,
     find_most_failed_ip,
     find_suspicious_ips,
@@ -13,6 +14,7 @@ from log_parser import (
     save_security_report,
     save_json_report
 )
+
 # List of fake IP addresses that will be randomly used in the log entries.
 IPS = [
     "192.168.1.10",
@@ -135,6 +137,9 @@ failed_logins = count_failed_logins(logs)
 # Count all HTTP status codes.
 status_codes = count_status_codes(logs)
 
+# Count how many times each path was requested.
+path_counts = count_paths(logs)
+
 # Calculate the total number of failed login attempts.
 total_failed = total_failed_logins(failed_logins)
 
@@ -149,6 +154,9 @@ print(f"Total failed login attempts: {total_failed}")
 
 print("\nHTTP Status Code Statistics:")
 print(status_codes)
+
+print("\nRequest Path Statistics:")
+print(path_counts)
 
 print(f"\nIP with the most failed login attempts: {most_failed_ip}")
 print(f"Number of failed attempts: {highest_attempts}")

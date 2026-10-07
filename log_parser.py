@@ -49,6 +49,20 @@ def count_status_codes(logs):
 
     return status_codes
 
+# Count how many times each requested path appears in the logs.
+def count_paths(logs):
+    paths = {}
+
+    for log in logs:
+        path = log["path"]
+
+        if path in paths:
+            paths[path] += 1
+        else:
+            paths[path] = 1
+
+    return paths
+
 
 def total_failed_logins(failed_logins):
     total = 0
