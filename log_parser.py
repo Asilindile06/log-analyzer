@@ -4,6 +4,10 @@ import json
 def parse_log_line(log_line):
     parts = log_line.split()
 
+    # Ignore lines that do not contain enough information.
+    if len(parts) < 9:
+        return None
+
     ip_address = parts[0]
     method = parts[5].replace('"', '')
     path = parts[6]
@@ -105,7 +109,8 @@ def read_log_file(filename):
 
             if line:
                 log = parse_log_line(line)
-                logs.append(log)
+                if log is not None:
+                    logs.append(log)
 
     return logs
 
