@@ -146,8 +146,14 @@ total_failed = total_failed_logins(failed_logins)
 # Find the IP address with the highest number of failed login attempts.
 most_failed_ip, highest_attempts = find_most_failed_ip(failed_logins)
 
+# Set the number of failed attempts needed to flag an IP as suspicious.
+SUSPICIOUS_THRESHOLD = 3
+
 # Find IP addresses that have reached the suspicious threshold.
-suspicious_ips = find_suspicious_ips(failed_logins)
+suspicious_ips = find_suspicious_ips(
+    failed_logins,
+    SUSPICIOUS_THRESHOLD
+)
 
 # Display the total number of failed login attempts.
 print(f"Total failed login attempts: {total_failed}")
