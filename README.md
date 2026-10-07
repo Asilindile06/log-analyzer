@@ -1,12 +1,34 @@
 # Log Analyzer
-A Python-based cybersecurity tool design to parse server logs,detect
-suspicios access patterns, and flag security events.
 
-## Features (In Progress)
--Parse raw HTTP/Server access logs
--Detect failed login attempts and repeated trial and error attacks
--Generate structured security summeries
+A Python-based cybersecurity tool designed to parse server logs, detect suspicious access patterns, and identify potential security events.
 
-##Setup & Usage
-``bash
-python3 main.py
+## Features
+
+- Parse raw HTTP/server access logs
+- Detect failed login attempts
+- Count failed login attempts by IP address
+- Identify suspicious IP addresses
+- Use a configurable suspicious IP threshold
+- Count HTTP status codes
+- Count requested paths
+- Identify the IP address with the most failed login attempts
+- Generate a security summary
+- Generate a text-based security report
+- Generate a JSON security report
+- Safely ignore malformed log lines
+
+## Technologies Used
+
+- Python 3
+- Git
+- GitHub
+- JSON
+- Unit Testing with Python `unittest`
+
+## Setup & Usage
+
+Clone the repository and move into the project directory.
+
+```bash
+git clone https://github.com/Asilindile06/log-analyzer.git
+cd log-analyzer
