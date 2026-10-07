@@ -168,6 +168,7 @@ print(f"\nIP with the most failed login attempts: {most_failed_ip}")
 print(f"Number of failed attempts: {highest_attempts}")
 # Display an overall summary of the security analysis.
 print("\n=== Security Summary ===")
+print(f"Suspicious IP threshold: {SUSPICIOUS_THRESHOLD} failed attempts")
 print(f"Total log entries: {len(logs)}")
 print(f"Total failed login attempts: {total_failed}")
 print(f"Number of suspicious IPs: {len(suspicious_ips)}")
