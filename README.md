@@ -32,3 +32,36 @@ Clone the repository and move into the project directory.
 ```bash
 git clone https://github.com/Asilindile06/log-analyzer.git
 cd log-analyzer
+
+## How the Log Analyzer Works
+
+```text
+Server Logs
+     |
+     v
+Read Log File
+     |
+     v
+Parse Log Entries
+     |
+     v
+Analyze Log Data
+     |
+     +-------------------+
+     |                   |
+     v                   v
+Failed Logins       HTTP Statistics
+     |
+     v
+Count Failed Logins by IP
+     |
+     v
+Identify Suspicious IPs
+     |
+     v
+Generate Security Summary
+     |
+     +-------------------+
+     |                   |
+     v                   v
+Text Report         JSON Report
