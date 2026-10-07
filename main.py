@@ -188,6 +188,9 @@ save_security_report(
 save_json_report(
     failed_logins,
     suspicious_ips,
+    status_codes,
+    path_counts,
+    most_failed_ip,
+    highest_attempts,
     "security_report.json"
 )
-

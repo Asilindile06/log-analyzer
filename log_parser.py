@@ -137,9 +137,14 @@ def save_security_report(failed_logins, suspicious_ips, filename):
             file.write(f"Failed login attempts: {attempts}\n\n")
 
 # Save the security analysis results as a JSON file.
-def save_json_report(failed_logins, suspicious_ips, filename):
+def save_json_report(failed_logins,suspicious_ips,status_codes,path_counts,
+    most_failed_ip,highest_attempts,filename):
     report = {
         "total_failed_logins": total_failed_logins(failed_logins),
+        "status_codes": status_codes,
+        "path_counts": path_counts,
+        "most_failed_ip": most_failed_ip,
+        "highest_failed_attempts": highest_attempts,
         "suspicious_ips": {}
     }
 
