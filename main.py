@@ -152,6 +152,13 @@ print(status_codes)
 
 print(f"\nIP with the most failed login attempts: {most_failed_ip}")
 print(f"Number of failed attempts: {highest_attempts}")
+# Display an overall summary of the security analysis.
+print("\n=== Security Summary ===")
+print(f"Total log entries: {len(logs)}")
+print(f"Total failed login attempts: {total_failed}")
+print(f"Number of suspicious IPs: {len(suspicious_ips)}")
+print(f"Most suspicious IP: {most_failed_ip}")
+print(f"Failed attempts from most suspicious IP: {highest_attempts}")
 
 # Display the security report.
 generate_security_report(failed_logins, suspicious_ips)
