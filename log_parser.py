@@ -5,7 +5,7 @@ def parse_log_line(log_line):
     parts = log_line.split()
 
     # Ignore lines that do not contain enough information.
-    if len(parts) < 9:
+    if len(parts) < 10:
         return None
 
     ip_address = parts[0]
