@@ -12,12 +12,16 @@ def parse_log_line(log_line):
     method = parts[5].replace('"', '')
     path = parts[6]
     status_code = parts[8]
+    size = int(parts[9])
+     
 
     return {
         "ip": ip_address,
         "method": method,
         "path": path,
-        "status": status_code
+        "status": status_code,
+         "size": size
+        
     }
 
 

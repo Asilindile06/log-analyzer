@@ -1,7 +1,7 @@
 import unittest
 
 # Import the function that we are going to test.
-from log_parser import parse_log_line
+from log_parser import parse_log_line, count_failed_logins
 
 
 class TestLogParser(unittest.TestCase):
@@ -19,7 +19,7 @@ class TestLogParser(unittest.TestCase):
         self.assertEqual(result["ip"], "198.51.100.7")
         self.assertEqual(result["method"], "GET")
         self.assertEqual(result["path"], "/about")
-        self.assertEqual(result["status"], 401)
+        self.assertEqual(result["status"], "401")
         self.assertEqual(result["size"], 3734)
 
     # Test that an invalid log line is handled safely.
