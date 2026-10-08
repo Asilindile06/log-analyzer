@@ -1,7 +1,7 @@
 import unittest
 
 # Import the function that we are going to test.
-from log_parser import parse_log_line, count_failed_logins
+from log_parser import parse_log_line, count_failed_logins, count_status_codes,  count_paths,  total_failed_logins
 
 
 class TestLogParser(unittest.TestCase):
@@ -33,6 +33,64 @@ class TestLogParser(unittest.TestCase):
         # The parser should return None when there is no match.
         self.assertIsNone(result)
 
+        # Test that failed login attempts are counted correctly.
+    def test_count_failed_logins(self):
+        logs = [
+            {"ip": "192.168.1.10", "status": "401"},
+            {"ip": "192.168.1.10", "status": "401"},
+            {"ip": "10.0.0.5", "status": "200"},
+            {"ip": "10.0.0.5", "status": "401"}
+        ]
+
+        result = count_failed_logins(logs)
+
+        self.assertEqual(result["192.168.1.10"], 2)
+        self.assertEqual(result["10.0.0.5"], 1)
+
+
+        # Test that HTTP status codes are counted correctly.
+    def test_count_status_codes(self):
+        logs = [
+            {"status": "200"},
+            {"status": "200"},
+            {"status": "401"},
+            {"status": "404"},
+            {"status": "401"}
+        ]
+
+        result = count_status_codes(logs)
+
+        self.assertEqual(result["200"], 2)
+        self.assertEqual(result["401"], 2)
+        self.assertEqual(result["404"], 1)
+
+        # Test that requested paths are counted correctly.
+    def test_count_paths(self):
+        logs = [
+            {"path": "/login"},
+            {"path": "/login"},
+            {"path": "/about"},
+            {"path": "/dashboard"},
+            {"path": "/about"}
+        ]
+
+        result = count_paths(logs)
+
+        self.assertEqual(result["/login"], 2)
+        self.assertEqual(result["/about"], 2)
+        self.assertEqual(result["/dashboard"], 1)
+
+        # Test that all failed login attempts are added together.
+    def test_total_failed_logins(self):
+        failed_logins = {
+            "192.168.1.10": 2,
+            "10.0.0.5": 1,
+            "203.0.113.44": 3
+        }
+
+        result = total_failed_logins(failed_logins)
+
+        self.assertEqual(result, 6)
 
 # Run the tests when this file is executed directly.
 if __name__ == "__main__":
