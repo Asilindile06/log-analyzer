@@ -1,7 +1,7 @@
 import unittest
 
 # Import the function that we are going to test.
-from log_parser import parse_log_line, count_failed_logins, count_status_codes,  count_paths,  total_failed_logins
+from log_parser import parse_log_line, count_failed_logins, count_status_codes, find_most_failed_ip,  count_paths,  total_failed_logins, find_suspicious_ips
 
 
 class TestLogParser(unittest.TestCase):
@@ -33,7 +33,7 @@ class TestLogParser(unittest.TestCase):
         # The parser should return None when there is no match.
         self.assertIsNone(result)
 
-        # Test that failed login attempts are counted correctly.
+    # Test that failed login attempts are counted correctly.
     def test_count_failed_logins(self):
         logs = [
             {"ip": "192.168.1.10", "status": "401"},
@@ -48,7 +48,7 @@ class TestLogParser(unittest.TestCase):
         self.assertEqual(result["10.0.0.5"], 1)
 
 
-        # Test that HTTP status codes are counted correctly.
+    # Test that HTTP status codes are counted correctly.
     def test_count_status_codes(self):
         logs = [
             {"status": "200"},
@@ -64,7 +64,7 @@ class TestLogParser(unittest.TestCase):
         self.assertEqual(result["401"], 2)
         self.assertEqual(result["404"], 1)
 
-        # Test that requested paths are counted correctly.
+    # Test that requested paths are counted correctly.
     def test_count_paths(self):
         logs = [
             {"path": "/login"},
@@ -80,7 +80,7 @@ class TestLogParser(unittest.TestCase):
         self.assertEqual(result["/about"], 2)
         self.assertEqual(result["/dashboard"], 1)
 
-        # Test that all failed login attempts are added together.
+    # Test that all failed login attempts are added together.
     def test_total_failed_logins(self):
         failed_logins = {
             "192.168.1.10": 2,
@@ -91,6 +91,33 @@ class TestLogParser(unittest.TestCase):
         result = total_failed_logins(failed_logins)
 
         self.assertEqual(result, 6)
+
+    # Test that the IP with the most failed login attempts is found.
+    def test_find_most_failed_ip(self):
+        failed_logins = {
+            "192.168.1.10": 2,
+            "10.0.0.5": 5,
+            "203.0.113.44": 3
+        }
+
+        result = find_most_failed_ip(failed_logins)
+
+        self.assertEqual(result[0], "10.0.0.5")
+        self.assertEqual(result[1], 5)
+
+    # Test that IPs reaching the threshold are flagged as suspicious.
+    def test_find_suspicious_ips(self):
+        failed_logins = {
+            "192.168.1.10": 2,
+            "10.0.0.5": 5,
+            "203.0.113.44": 3
+        }
+
+        result = find_suspicious_ips(failed_logins, threshold=3)
+
+        self.assertIn("10.0.0.5", result)
+        self.assertIn("203.0.113.44", result)
+        self.assertNotIn("192.168.1.10", result)
 
 # Run the tests when this file is executed directly.
 if __name__ == "__main__":
